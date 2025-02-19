@@ -1,0 +1,88 @@
+/* Navbar Styles */
+.navbar {
+    background-color: #333;
+    padding: 1rem 2rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    transition: background-color 0.3s ease;
+  }
+  
+  /* Logo */
+  .navbar .logo {
+    font-size: 1.8rem;
+    color: #fff;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    margin-right: auto;
+  }
+  
+  /* Navbar List */
+  .navbar ul {
+    list-style: none;
+    display: flex;
+    gap: 2rem;
+    margin: 0;
+    padding: 0;
+  }
+  
+  .navbar li {
+    margin: 0;
+  }
+  
+  .navbar a {
+    text-decoration: none;
+    color: #fff;
+    font-size: 1.1rem;
+    font-weight: 600;
+    transition: color 0.3s ease;
+  }
+  
+  .navbar a:hover {
+    color: #0073e6;
+  }
+  
+  /* Dark Mode Toggle Button */
+  .theme-toggle {
+    background-color: transparent;
+    border: 2px solid #0073e6;
+    color: #0073e6;
+    padding: 0.5rem 1rem;
+    font-size: 1rem;
+    cursor: pointer;
+    border-radius: 5px;
+    transition: all 0.3s ease;
+  }
+  
+  .theme-toggle:hover {
+    background-color: #0073e6;
+    color: #fff;
+  }
+  
+  /* Dark Mode */
+  .dark-mode .navbar {
+    background-color: #222;
+  }
+  
+  .dark-mode .navbar a {
+    color: #ddd;
+  }
+  
+  .dark-mode .navbar a:hover {
+    color: #4fa3ff;
+  }
+  
+  .dark-mode .theme-toggle {
+    border-color: #ffa500;
+    color: #ffa500;
+  }
+  
+  .dark-mode .theme-toggle:hover {
+    background-color: #ffa500;
+    color: #222;
+  }
+  
