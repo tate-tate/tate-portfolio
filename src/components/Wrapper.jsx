@@ -5,7 +5,6 @@ const Wrapper = ({children}) => {
             </div>
         </div>
     )
-    
     }
     
     export default Wrapper;

@@ -12,9 +12,9 @@ const HomePage = () => {
             <p>I am a Junior Studying Data Visualization & Information Technology at Purdue University.</p>
             <p>This website is a showcase of what I'm working on in my studies, while also doubling as a resume that can showcase the skills I have already learned & will continue to learn; the technology industry is always changing and I am always learning something new.</p>
             <p>Use the navigation bar above to view my works, both past and present; and to get in touch!</p>
+            <img src={seniorphoto} alt="Senior Photo" className={style.homepagepicture} />
             </Wrapper>
             <Wrapper>
-            <img src={seniorphoto} alt="Senior Photo" className={style.homepagepicture} />
             <img src={camera} alt="Camera" className={style.homepagepicture}/>
             </Wrapper>
         </Wrapper>

@@ -14,7 +14,7 @@ const Navbar = () => {
   return (
     <nav className="navbar">
       <ul>
-      <li><Link to="/">HomePage</Link></li>
+        <li><Link to="/"><p className="logo">Tate Sever - Data Visualization</p></Link></li>
         <li><Link to="/current-works">Current Works</Link></li>
         <li><Link to="/other-projects">Other Projects</Link></li>
         <li><Link to="/personal">Personal</Link></li>
