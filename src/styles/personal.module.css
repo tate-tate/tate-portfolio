@@ -1,0 +1,73 @@
+.personalContainer {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  text-align: left;
+  padding: 2rem;
+  max-width: 900px;
+  margin: 0 auto;
+  gap: 2rem;
+  flex-wrap: nowrap; 
+}
+
+.imageContainer {
+  display: flex;
+  justify-content: space-evenly; /* Adds equal spacing between images */
+  align-items: center;
+  margin-top: 20px;
+  max-width: 1500px; /* Prevents excessive stretching */
+  margin-left: auto;
+  margin-right: auto; /* Centers the entire container */
+}
+
+
+.personalPicture {
+  width: 500px; /* Set a fixed width */
+  height: 300px; /* Set a fixed height */
+  object-fit: cover; /* Ensure the image covers the area without distortion */
+  border-radius: 10px; /* Optional: Add rounded corners */
+  margin: 0 30px; /* Adds space between images */
+  transition: transform 0.3s ease; /* Adds a smooth effect on hover */
+}
+
+@media (max-width: 768px) {
+  .imageContainer {
+    flex-direction: column; /* Stacks images on smaller screens */
+  }
+
+  .personalPicture {
+    width: 80%; /* Increases size for smaller screens */
+    max-width: 300px;
+  }
+}
+
+
+.text {
+  flex: 1;
+  color: #f5f5f5 !important;
+  min-width: 300px;
+}
+
+h1 {
+  font-size: 2.5rem;
+  font-weight: bold;
+  color: #fff;
+  margin-bottom: 1rem;
+}
+
+p {
+  font-size: 1.1rem;
+  line-height: 1.6;
+  margin-bottom: 1rem;
+}
+
+@media (max-width: 768px) {
+  .homeContainer {
+      flex-direction: column;
+      text-align: center;
+  }
+
+  .seniorphoto {
+      width: 200px;
+  }
+}

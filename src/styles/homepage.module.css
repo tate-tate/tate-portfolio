@@ -1,53 +1,74 @@
 .homeContainer {
-    display: flex;
-    align-items: center;
-    justify-content: flex-start;
-    text-align: left;
-    padding: 2rem;
-    max-width: 900px;
-    margin: 0 auto;
-    gap: 2rem;
-    flex-wrap: nowrap; 
-  }
-  
-  .homepagepicture {
-    width: 250px;
-    height: auto;
-    border-radius: 10px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
-    flex-shrink: 0;
-    margin : 10px;
-    align-items: center;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  text-align: left;
+  padding: 2rem;
+  max-width: 900px;
+  margin: 0 auto;
+  gap: 2rem;
+  flex-wrap: nowrap; 
+}
+
+.imageContainer {
+  display: flex;
+  justify-content: space-evenly; /* Adds equal spacing between images */
+  align-items: center;
+  margin-top: 20px;
+  width: 90%; /* Allows images to spread evenly */
+  max-width: 1000px; /* Prevents excessive stretching */
+  margin-left: auto;
+  margin-right: auto; /* Centers the entire container */
+}
+
+
+.homepagepicture {
+  width: 300px; /* Set a fixed width */
+  height: 300px; /* Set a fixed height */
+  object-fit: cover; /* Ensure the image covers the area without distortion */
+  border-radius: 10px; /* Optional: Add rounded corners */
+  margin: 0 30px; /* Adds space between images */
+  transition: transform 0.3s ease; /* Adds a smooth effect on hover */
+}
+
+@media (max-width: 768px) {
+  .imageContainer {
+    flex-direction: column; /* Stacks images on smaller screens */
   }
 
-  
-  .text {
-    flex: 1;
-    color: #f5f5f5 !important;
-    min-width: 300px;
+  .homepagepicture {
+    width: 80%; /* Increases size for smaller screens */
+    max-width: 300px;
   }
-  
-  h1 {
-    font-size: 2.5rem;
-    font-weight: bold;
-    color: #fff;
-    margin-bottom: 1rem;
-  }
-  
-  p {
-    font-size: 1.1rem;
-    line-height: 1.6;
-    margin-bottom: 1rem;
-  }
-  
-  @media (max-width: 768px) {
-    .homeContainer {
+}
+
+
+.text {
+  flex: 1;
+  color: #f5f5f5 !important;
+  min-width: 300px;
+}
+
+h1 {
+  font-size: 2.5rem;
+  font-weight: bold;
+  color: #fff;
+  margin-bottom: 1rem;
+}
+
+p {
+  font-size: 1.1rem;
+  line-height: 1.6;
+  margin-bottom: 1rem;
+}
+
+@media (max-width: 768px) {
+  .homeContainer {
       flex-direction: column;
       text-align: center;
-    }
-  
-    .seniorphoto {
-      width: 200px;
-    }
   }
-  
+
+  .seniorphoto {
+      width: 200px;
+  }
+}

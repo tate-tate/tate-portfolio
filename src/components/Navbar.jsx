@@ -1,25 +1,44 @@
 import React, { useState } from 'react';
-import "../styles/navbar.css"
+import "../styles/navbar.css";
 import { Link } from 'react-router-dom';
 
 const Navbar = () => {
-  const [darkMode, setDarkMode] = useState(false);
+  const [darkMode, setDarkMode] = useState(true);
+  const [menuOpen, setMenuOpen] = useState(false);
 
   const toggleTheme = () => {
-    document.body.classList.toggle("dark-bg");
-    document.querySelector(".navbar").classList.toggle("dark-bg");
+    if (darkMode) {
+      document.body.classList.remove("dark-mode");
+      document.body.classList.add("light-mode");
+    } else {
+      document.body.classList.remove("light-mode");
+      document.body.classList.add("dark-mode");
+    }
     setDarkMode(!darkMode);
+  };
+
+  const toggleMenu = () => {
+    setMenuOpen(!menuOpen);
   };
 
   return (
     <nav className="navbar">
-      <ul>
-        <li><Link to="/"><p className="logo">Tate Sever - Data Visualization</p></Link></li>
+      <div className="navbar-header">
+        <Link to="/" className="logo">Tate Sever - Data Visualization</Link>
+        <button className="menu-toggle" onClick={toggleMenu}>
+          ☰
+        </button>
+      </div>
+      <ul className={`navbar-menu ${menuOpen ? 'open' : ''}`}>
         <li><Link to="/current-works">Current Works</Link></li>
         <li><Link to="/other-projects">Other Projects</Link></li>
         <li><Link to="/personal">Personal</Link></li>
-        <li><a href="mailto:gabrieltsever@gmail.com">Contact Me</a></li>
+        <li><a href="https://www.linkedin.com/in/gabriel-sever-dvis/">LinkedIN</a></li>
+        <li><a href="mailto:gabrieltsever@gmail.com">Contact</a></li>
       </ul>
+      <button className="theme-toggle" onClick={toggleTheme}>
+        {darkMode ? 'Light Mode' : 'Dark Mode'}
+      </button>
     </nav>
   );
 };
