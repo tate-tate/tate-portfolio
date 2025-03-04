@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { HashRouter, Routes, Route } from 'react-router-dom';
 import './App.css';
 import Navbar from './components/Navbar';
@@ -9,8 +9,6 @@ import Personal from './pages/Personal';
 import OtherProjects from './pages/OtherProjects';
 
 function App() {
-  const [count, setCount] = useState(0);
-
   return (
     <HashRouter>
       <header>
