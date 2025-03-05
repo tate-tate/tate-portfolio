@@ -22,7 +22,7 @@ const CurrentWorks = () => {
             <Wrapper>
                 <h2>JavaScript (React + Vite)</h2>
                 <h3>Portfolio Site - This Site!</h3>
-                <p>My portfolio site previous to this one was simply HTML and Bootstrap CSS. While simple and easy to integrate, it didn't have the reactivity I was looking for, and its styling was lacking. When tasked to find a project in a Web Apps class, I decided to revamp my portfolio to use Javascript, for ease of future expansion and better interactivity. I am still figuring out all of the CSS, bear with me!</p>
+                <p>My portfolio site previous to this one was simply HTML and Bootstrap CSS. While simple and easy to integrate, it didn't have the reactivity I was looking for, and its styling was lacking. When tasked to find a project in a Web Apps class, I decided to revamp my portfolio to use Javascript, for ease of future expansion and better interactivity. I am probably still figuring out all of the CSS, bear with me!</p>
                 <br />
                 <p>Here is a screenshot of the code in Visual Studio Code: Just as proof that I'm actually working on it myself :P</p>
                 <img src={currentworksVs} alt="Visual Studio Code for this Website" className={style.vsphoto}/>

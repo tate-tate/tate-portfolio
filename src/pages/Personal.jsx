@@ -24,7 +24,8 @@ const Personal = () => {
       </Wrapper>
       <Wrapper>
         <h1>Photography</h1>
-        <p>In my (limited) free time, I enjoy taking photos. I shoot both on both 35mm film and digital, but mostly digital these days- darkroom is expensive. Below are some of my best shots.</p>
+        <h3>A collection of points in time.</h3>
+        <p>If I'm not behind a screen, you might find me out in the world shooting photos. I shoot on both 35mm film and digital - but these days, mostly digital. Below are some of my best shots.</p>
       </Wrapper>
       <Wrapper>
         <h2>Gary, IN - City Methodist Church</h2>
@@ -40,7 +41,7 @@ const Personal = () => {
       </Wrapper>
       <Wrapper>
         <h2>Pittsburgh Botanical Gardens</h2>
-        <p>An experiment with using the macro lens.</p>
+        <p>An experiment using the macro lens.</p>
         <div className={style.imageContainer}>
           <PhotoViewer thumbnailSrc={pitt1} fullSrc={pitt1} alt="Pittsburgh - 1" />
           <PhotoViewer thumbnailSrc={pitt2} fullSrc={pitt2} alt="Pittsburgh - 2" />
@@ -52,8 +53,8 @@ const Personal = () => {
       </Wrapper>
       <Wrapper>
         <h1>Manson</h1>
-        <p>I met Manson in 2022, when I met his previous owner & my best friend Tina- the day I met him, I knew that he was my "soul cat". Over two years later, in December of 2024, Tina had an abrupt change in her living situation, and could not keep him anymore. I asked to adopt him, and two days before Christmas, he became mine. Manson has been widely used in my studies - whenever I needed a filler image, or an inspiration for a project, it has been him. This section is dedicated to my heart, my soul, my Manson.
-        </p>
+        <h3>For you cat people out there.</h3>
+        <p>I met Manson in 2022 through my best friend, Tina, his previous owner. From the moment I met him, I knew he was my "soul cat." In December 2024, Tina had an abrupt change in her living situation and could no longer keep him. Just two days before Christmas, Manson officially became mine. Beyond being my companion, Manson has played an unexpected role in my work—serving as the subject for countless projects and coding filler-images in my studies. This section is dedicated to him: my heart, my soul, my Manson.</p>
         <div className={style.imageContainer}>
           <PhotoViewer thumbnailSrc={manson1} fullSrc={manson1} alt="Manson - 1" vertical />
           <PhotoViewer thumbnailSrc={manson2} fullSrc={manson2} alt="Manson - 2" vertical />
