@@ -13,9 +13,11 @@ import pitt4 from "../assets/pitt4.jpg";
 import manson1 from "../assets/manson1.jpg";
 import manson2 from "../assets/manson2.jpg";
 import manson3 from "../assets/manson3.jpg";
+import FadeIn from '../components/FadeIn';
 
 const Personal = () => {
   return (
+    <FadeIn duration={1000} delay={100}>
     <Wrapper>
       <Wrapper>
         <h1>Personal</h1>
@@ -62,6 +64,7 @@ const Personal = () => {
         </div>
       </Wrapper>
     </Wrapper>
+    </FadeIn>
   );
 };
 

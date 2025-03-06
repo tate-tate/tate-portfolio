@@ -3,10 +3,12 @@ import { Link } from "react-router-dom";
 import SketchfabEmbed1 from "../components/SketchfabEmbed1";
 import SketchfabEmbed2 from "../components/SketchfabEmbed2";
 import style from "../styles/otherprojects.module.css";
+import FadeIn from "../components/FadeIn";
 
 const OtherProjects = () => {
     return (
         <>
+        <FadeIn duration={1000} delay={100}>
         <Wrapper>
             <h1>Other Projects</h1>
             <p>This section is for any relavent past projects, wether it be from my studies at Purdue or on my own personal time.</p>
@@ -23,6 +25,7 @@ const OtherProjects = () => {
             <SketchfabEmbed2 />
             <p className={style.caption}>3D Animated Graph - # of Tornadoes by Month in 2010</p>
         </Wrapper>
+        </FadeIn>
         </>
     )
 }

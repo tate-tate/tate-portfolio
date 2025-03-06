@@ -1,0 +1,8 @@
+.fade-in {
+    opacity: 0;
+    transition-property: opacity;
+  }
+  
+  .fade-in.visible {
+    opacity: 1;
+  }

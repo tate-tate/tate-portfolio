@@ -4,10 +4,12 @@ import { Link } from "react-router-dom";
 import React from "react";
 import currentworksVs from "../assets/currentworks-vs.png";
 import style from "../styles/currentworks.module.css";
+import FadeIn from "../components/FadeIn";
 
 const CurrentWorks = () => {
     return (
         <>
+        <FadeIn duration={1000} delay={100}>
             <Wrapper>
                 <h1>Current Works - As of 2025</h1>
                 <p>This page is a collection of projects I have recently completed, or am in the process of completing.</p>
@@ -32,6 +34,7 @@ const CurrentWorks = () => {
                 <h3>Coming Soon</h3>
                 <p>In my studies at Purdue, I am currently learning D3. Check back soon for a viz!</p>
             </Wrapper>
+        </FadeIn>
         </>
     )
 }
