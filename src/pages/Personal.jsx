@@ -13,6 +13,10 @@ import pitt4 from "../assets/pitt4.jpg";
 import manson1 from "../assets/manson1.jpg";
 import manson2 from "../assets/manson2.jpg";
 import manson3 from "../assets/manson3.jpg";
+import oib1 from "../assets/oib1.jpg";
+import oib2 from "../assets/oib2.jpg";
+import oib3 from "../assets/oib3.jpg";
+import oib4 from "../assets/oib4.jpg";
 import FadeIn from '../components/FadeIn';
 
 const Personal = () => {
@@ -27,7 +31,7 @@ const Personal = () => {
       <Wrapper>
         <h1>Photography</h1>
         <h3>A collection of points in time.</h3>
-        <p>If I'm not behind a screen, you might find me out in the world shooting photos. I shoot on both 35mm film and digital - but these days, mostly digital. Below are some of my best shots.</p>
+        <p>If I'm not behind a screen, you might find me out in the world shooting photos. I shoot on both 35mm film and digital - but these days, mostly digital. Below are some of my best shots. Click any image to enlarge.</p>
       </Wrapper>
       <Wrapper>
         <h2>Gary, IN - City Methodist Church</h2>
@@ -51,6 +55,18 @@ const Personal = () => {
         <div className={style.imageContainer}>
           <PhotoViewer thumbnailSrc={pitt3} fullSrc={pitt3} alt="Pittsburgh - 3" />
           <PhotoViewer thumbnailSrc={pitt4} fullSrc={pitt4} alt="Pittsburgh - 4" />
+        </div>
+      </Wrapper>
+      <Wrapper>
+        <h2>Ocean Isle Beach, NC</h2>
+        <p>Landscape, and some macro shots.</p>
+        <div className={style.imageContainer}>
+        <PhotoViewer thumbnailSrc={oib1} fullSrc={oib1} alt="Ocean Isle Beach - 1" />
+        <PhotoViewer thumbnailSrc={oib2} fullSrc={oib2} alt="Ocean Isle Beach - 2" />
+        </div>
+        <div className={style.imageContainer}>
+        <PhotoViewer thumbnailSrc={oib3} fullSrc={oib3} alt="Ocean Isle Beach - 3" />
+        <PhotoViewer thumbnailSrc={oib4} fullSrc={oib4} alt="Ocean Isle Beach - 4" />
         </div>
       </Wrapper>
       <Wrapper>
