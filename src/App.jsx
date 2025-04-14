@@ -22,7 +22,8 @@ function App() {
           <Route path="/other-projects" element={<OtherProjects />} />
           <Route path="/personal" element={<Personal />} />
           <Route path="*" element={<NotFound />} />
-        </Routes>
+          <Route path="/d3-vis" element={<D3Vis />} />
+          </Routes>
       </main>
     </HashRouter>
   );
