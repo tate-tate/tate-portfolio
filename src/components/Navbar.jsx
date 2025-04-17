@@ -5,7 +5,6 @@ import { Link } from 'react-router-dom';
 const Navbar = () => {
   const [darkMode, setDarkMode] = useState(true);
   const [menuOpen, setMenuOpen] = useState(false);
-  const [dropdownOpen, setDropdownOpen] = useState(false);
 
   const toggleTheme = () => {
     if (darkMode) {
@@ -22,10 +21,6 @@ const Navbar = () => {
     setMenuOpen(!menuOpen);
   };
 
-  const toggleDropdown = () => {
-    setDropdownOpen(!dropdownOpen);
-  };
-
   return (
     <nav className="navbar">
       <div className="navbar-header">
@@ -35,17 +30,11 @@ const Navbar = () => {
         </button>
       </div>
       <ul className={`navbar-menu ${menuOpen ? 'open' : ''}`}>
-        <li 
-          className="dropdown" 
-          onMouseEnter={() => setDropdownOpen(true)} 
-          onMouseLeave={() => setDropdownOpen(false)}
-        >
+        <li className="dropdown">
           <Link to="/current-works">Current Works</Link>
-           {dropdownOpen && (
-            <ul className="dropdown-menu">
-              <li><Link to="/d3-vis">D3 Visualization</Link></li>
-            </ul>
-          )}
+          <ul className="dropdown-menu">
+            <li><Link to="/d3-vis">D3 Visualization</Link></li>
+          </ul>
         </li>
         <li><Link to="/other-projects">Other Projects</Link></li>
         <li><Link to="/personal">Personal</Link></li>

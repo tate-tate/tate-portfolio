@@ -1,29 +1,52 @@
 .container {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 20px;
     display: flex;
-    flex-direction: column; /* Stack children vertically */
-    height: auto; /* Ensure it grows with content */
+    flex-direction: column;
+    gap: 20px; /* Add spacing between rows */
+    align-items: center; /* Center the entire container horizontally */
+    margin-top: 80px; /* Push the container down to avoid overlapping with the navbar */
 }
 
 .row {
     display: flex;
-    justify-content: space-between;
-    margin: 20px 0;
-    align-items: flex-start;
-    flex-wrap: wrap; /* Allow wrapping if necessary */
-    width: 100%; /* Ensure the row takes up full width */
-    height: auto; /* Ensure it grows with content */
+    flex-direction: row; /* Ensure items are side by side */
+    align-items: flex-start; /* Align items at the top */
+    justify-content: center; /* Center the row horizontally */
+    gap: 20px; /* Add spacing between the components */
+    flex-wrap: nowrap; /* Prevent wrapping to a new line */
+    width: 100%; /* Ensure the row spans the full width */
+    max-width: 1200px; /* Optional: Limit the maximum width of the row */
 }
 
+.stats {
+    flex: 1; /* Allow the stats section to grow/shrink */
+    min-width: 300px; /* Set a minimum width for the stats section */
+    max-width: 50%; /* Prevent it from taking too much space */
+    overflow: auto; /* Add scrolling if the content overflows */
+}
+
+.shape {
+    flex: 1; /* Allow the shape section to grow/shrink */
+    min-width: 300px; /* Set a minimum width for the shape section */
+    max-width: 50%; /* Prevent it from taking too much space */
+}
+
+/* Ensure the tornadoShape background is transparent */
 #tornadoShape {
     width: 100%;
     height: 700px; /* Explicitly set height */
     position: relative;
     overflow: hidden;
-    background-color: #f8f9fa; /* Optional: Add a background color for debugging */
+    background-color: transparent; /* Ensure the background is transparent */
     border: 1px solid #ccc; /* Optional: Add a border for visibility */
+}
+
+/* Dynamic background for the parent container */
+.light-mode #tornadoShape {
+    background-color: #ffffff; /* Light mode background */
+}
+
+.dark-mode #tornadoShape {
+    background-color: transparent; /* Dark mode background remains transparent */
 }
 
 .tornado-dot {
@@ -34,4 +57,10 @@
     border-radius: 50%;
     opacity: 0.8;
     transition: transform 0.2s ease-in-out, opacity 0.2s ease-in-out;
+}
+.mapSection {
+    position: relative;
+    background-color: transparent; /* Ensure the map section is transparent */
+    z-index: 1;
+    overflow: hidden;
 }

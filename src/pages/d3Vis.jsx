@@ -39,16 +39,19 @@ const D3Vis = () => {
 
     return (
         <div className={styles.container}>
-            <h1>Tornadic Events in 2024</h1>
             <div className={styles.row}>
                 {filteredData.length > 0 && (
                     <>
-                        <TornadoStats data={filteredData} selectedState={selectedState} />
-                        <TornadoShape data={filteredData} projection={projection} />
+                        <div className={styles.stats}>
+                            <TornadoStats data={filteredData} selectedState={selectedState} />
+                        </div>
+                        <div className={styles.shape}>
+                            <TornadoShape data={filteredData} projection={projection} />
+                        </div>
                     </>
                 )}
             </div>
-            <div className={styles.row}>
+            <div className={styles.mapSection}>
                 <TornadoMap data={filteredData} />
             </div>
         </div>

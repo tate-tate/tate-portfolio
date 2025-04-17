@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import "../styles/filters.css"; // Import your CSS styles for the filters
 
 const Filters = ({ data, onFilterChange, onStateChange }) => {
     const [state, setState] = useState("all");
@@ -6,13 +7,11 @@ const Filters = ({ data, onFilterChange, onStateChange }) => {
     const [states, setStates] = useState([]);
 
     useEffect(() => {
-        // Extract unique state names from the data and sort them alphabetically
         const uniqueStates = Array.from(new Set(data.map((d) => d.STATE))).sort();
         setStates(uniqueStates);
     }, [data]);
 
     useEffect(() => {
-        // Call onFilterChange whenever state or strength changes
         if (onFilterChange) {
             onFilterChange({ state, strength });
         }
@@ -20,18 +19,19 @@ const Filters = ({ data, onFilterChange, onStateChange }) => {
 
     useEffect(() => {
         if (onStateChange && state !== "all") {
-            console.log("State changed to:", state); // Debug log
+            console.log("State changed to:", state);
             onStateChange(state);
         }
     }, [state, onStateChange]);
 
     return (
-        <div id="filters">
-            <label htmlFor="tornadoStrength">Tornado Strength:</label>
+        <div id="filters" className="filters-container">
+            <label htmlFor="tornadoStrength" className="filter-label">Tornado Strength:</label>
             <select
                 id="tornadoStrength"
                 value={strength}
                 onChange={(e) => setStrength(e.target.value)}
+                className="filter-dropdown"
             >
                 <option value="all">All</option>
                 <option value="EF0">EF0</option>
@@ -42,11 +42,12 @@ const Filters = ({ data, onFilterChange, onStateChange }) => {
                 <option value="EFU">EFU (Unknown)</option>
             </select>
             <br /><br />
-            <label htmlFor="stateSelect">Select a State:</label>
+            <label htmlFor="stateSelect" className="filter-label">Select a State:</label>
             <select
                 id="stateSelect"
                 value={state}
                 onChange={(e) => setState(e.target.value)}
+                className="filter-dropdown"
             >
                 <option value="all">All States</option>
                 {states.map((stateName) => (

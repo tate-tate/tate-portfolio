@@ -28,11 +28,15 @@ const CurrentWorks = () => {
                 <br />
                 <p>Here is a screenshot of the code in Visual Studio Code: Just as proof that I'm actually working on it myself :P</p>
                 <img src={currentworksVs} alt="Visual Studio Code for this Website" className={style.vsphoto}/>
+                <p><strong>Tools Used: </strong>Visual Studio Code, Vite + React, Javascript, CSS, HTML</p>
             </Wrapper>
             <Wrapper>
                 <h2>Data Visualization with D3.js</h2>
-                <h3>Coming Soon</h3>
-                <p>In my studies at Purdue, I am currently learning D3. Check back soon for a viz!</p>
+                <h3>April 2025</h3>
+                <p>In my studies at Purdue, I am in the process of completing a viz using d3, which can be viewed from the dropdown in the navbar above. Here are some more specific details:</p>
+                <p>Originally, this project was supposed to be completely seperate from this portfolio (a different site using HTML and some JS files). However, I decided to find out how to integrate it into my existing website. This proved more difficult than I thought, however, because React + Vite doesn't have native support for CSV files, and Javascript structuring is much more complex than HTML. However, after many headaches and brain breaks, I've (mostly) successfully integrated it here.</p>
+                <p><strong>Current Issues: </strong>Tooltips don't always show correctly on the map. Light/Dark mode isn't working properly. I am working on these!</p>
+                <p><strong>Tools Used: </strong>Visual Studio Code, Vite + React, RollupCSV, Javascript, CSS, Excel</p>
             </Wrapper>
         </FadeIn>
         </>

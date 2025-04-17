@@ -6,22 +6,27 @@ const TornadoMap = ({ data }) => {
     const [filteredData, setFilteredData] = useState(data);
     const [selectedState, setSelectedState] = useState("all");
 
-    // Refs for SVG, projection, path, and zoom
+    // refs for SVG, projection, path, and zoom
     const svgRef = useRef(null);
     const mapGroupRef = useRef(null);
     const projectionRef = useRef(null);
     const pathRef = useRef(null);
-    const zoomRef = useRef(null); // Store the zoom instance
+    const zoomRef = useRef(null);
+    const EF_SCALE_COLORS = [ //legend colors
+        { scale: "EF0", color: "#00FF00" }, // Green
+        { scale: "EF1", color: "#FFFF00" }, // Yellow
+        { scale: "EF2", color: "#FFA500" }, // Orange
+        { scale: "EF3", color: "#FF4500" }, // Dark Orange
+        { scale: "EF4", color: "#FF0000" }, // Red
+        { scale: "EFU", color: "#808080" }, // Grey (Unknown)
+    ];
 
     useEffect(() => {
-        // Set up the map dimensions
         const width = 1200;
         const height = 800;
-
-        // Clear any existing SVG to prevent duplicates
         d3.select("#map").selectAll("*").remove();
 
-        // Create the SVG element
+        //SVG element
         const svg = d3
             .select("#map")
             .append("svg")
@@ -39,17 +44,16 @@ const TornadoMap = ({ data }) => {
         const mapGroup = svg.append("g");
         mapGroupRef.current = mapGroup;
 
-        // Initialize zoom behavior
         const zoom = d3.zoom()
-            .scaleExtent([1, 8]) // Allow zooming between 1x and 8x
+            .scaleExtent([1, 8]) // Allow zooming
             .on("zoom", (event) => {
-                mapGroup.attr("transform", event.transform); // Apply zoom transformation
+                mapGroup.attr("transform", event.transform);
             });
 
-        svg.call(zoom); // Attach zoom behavior to the SVG
-        zoomRef.current = zoom; // Store the zoom instance for programmatic use
+        svg.call(zoom);
+        zoomRef.current = zoom;
 
-        // Load and render the US states map
+        //render map
         d3.json("/assets/data/us-states.json")
             .then((us) => {
                 mapGroup.selectAll("path")
@@ -60,35 +64,30 @@ const TornadoMap = ({ data }) => {
                     .attr("fill", "#EAEAEA")
                     .attr("stroke", "#333")
                     .on("click", (event, d) => {
-                        setSelectedState(d.properties.name); // Update the selected state
+                        setSelectedState(d.properties.name);
                     });
             })
             .catch((error) => {
                 console.error("Error loading US states JSON:", error);
             });
-    }, []); // Run only once on component mount
+    }, []);
 
     useEffect(() => {
-        // Render tornado dots whenever filteredData changes
         if (!mapGroupRef.current || !projectionRef.current) return;
-
+    
         const mapGroup = mapGroupRef.current;
         const projection = projectionRef.current;
-
-        // Clear existing dots
         mapGroup.selectAll("circle").remove();
-
-        // Define the color scale for EF scales
+    
         const colorScale = {
-            EF0: "#00FF00", // Green
-            EF1: "#FFFF00", // Yellow
-            EF2: "#FFA500", // Orange
-            EF3: "#FF4500", // Dark Orange
-            EF4: "#FF0000", // Red
-            EFU: "#808080", // Grey
+            EF0: "#00FF00",
+            EF1: "#FFFF00",
+            EF2: "#FFA500",
+            EF3: "#FF4500",
+            EF4: "#FF0000",
+            EFU: "#808080",
         };
-
-        // Add tornado dots
+    
         mapGroup.selectAll("circle")
             .data(filteredData)
             .enter()
@@ -102,67 +101,95 @@ const TornadoMap = ({ data }) => {
                 return coords ? coords[1] : null;
             })
             .attr("r", 4)
-            .attr("fill", (d) => colorScale[d.TOR_F_SCALE] || "#808080") // Default to grey if EF scale is missing
+            .attr("fill", (d) => colorScale[d.TOR_F_SCALE] || "#808080")
             .attr("opacity", 0.6)
             .on("mouseover", (event, d) => {
                 d3.select("#tooltip")
                     .style("opacity", 1)
-                    .style("left", `${event.pageX + 10}px`)
-                    .style("top", `${event.pageY + 10}px`)
                     .html(`
+                        <div style="font-size: 14px; font-weight: bold;">Tornado Details</div>
+                        <strong>State:</strong> ${d.STATE}<br>
                         <strong>EF Scale:</strong> ${d.TOR_F_SCALE}<br>
                         <strong>Latitude:</strong> ${d.BEGIN_LAT}<br>
                         <strong>Longitude:</strong> ${d.BEGIN_LON}<br>
                         <strong>Injuries:</strong> ${d.TOTAL_INJURIES}<br>
-                        <strong>Deaths:</strong> ${d.TOTAL_DEATHS}
+                        <strong>Deaths:</strong> ${d.TOTAL_DEATHS}<br>
+                        <strong>Property and Crop Damage:</strong> $${d.TOTAL_DAMAGE}<br>
                     `);
             })
             .on("mousemove", (event) => {
-                d3.select("#tooltip")
-                    .style("left", `${event.pageX + 10}px`)
-                    .style("top", `${event.pageY + 10}px`);
+                const tooltip = d3.select("#tooltip");
+                const mapContainer = document.getElementById("map");
+                const mapRect = mapContainer.getBoundingClientRect(); // Get the map's position on the screen
+
+                const scale = mapContainer.offsetWidth / mapRect.width; // Account for page zoom or scaling
+
+                // Adjust tooltip position relative to the map container and scaling
+                tooltip
+                    .style("left", `${(event.clientX - mapRect.left) * scale + 10}px`) // Offset 10px to the right of the cursor
+                    .style("top", `${(event.clientY - mapRect.top) * scale + 10}px`); // Offset 10px below the cursor
             })
             .on("mouseout", () => {
                 d3.select("#tooltip")
                     .style("opacity", 0);
             });
-    }, [filteredData]); // Re-run when filteredData changes
+    }, [filteredData]);
 
     useEffect(() => {
-        console.log("Selected state:", selectedState); // Debug log
-        if (!selectedState || selectedState === "all" || !pathRef.current || !svgRef.current || !zoomRef.current) return;
+        console.log("Selected state:", selectedState); // Debug
+    
+        if (!pathRef.current || !mapGroupRef.current || !svgRef.current || !zoomRef.current) return;
+    
+        const mapGroup = mapGroupRef.current;
+        const svg = svgRef.current;
+        const zoom = zoomRef.current;
+    
+        if (selectedState === "all") {
+            // Reset the zoom to show the entire map
+            svg.transition().duration(750).call(
+                zoom.transform,
+                d3.zoomIdentity // Reset to the default zoom state
+            );
+            mapGroup.transition().duration(750).attr("transform", "translate(0, 0) scale(1)");
+            return;
+        }
     
         d3.json("/assets/data/us-states.json")
             .then((us) => {
-                console.log("GeoJSON features:", us.features); // Debug log
+                console.log("GeoJSON features:", us.features); // Debug
+                console.log("Example feature properties:", us.features[0]?.properties); // Debug
+    
+                // Find the state feature by matching the selectedState
                 const stateFeature = us.features.find(
-                    (feature) => feature.properties.name.toLowerCase() === selectedState.toLowerCase()
+                    (feature) =>
+                        feature.properties?.NAME?.toLowerCase() === selectedState.toLowerCase()
                 );
-                console.log("State feature:", stateFeature); // Debug log
-                if (stateFeature) {
-                    const svg = svgRef.current;
-                    const path = pathRef.current;
-                    const zoom = zoomRef.current;
     
-                    const [[x0, y0], [x1, y1]] = path.bounds(stateFeature);
-    
-                    // Calculate the scale and translation
-                    const scale = Math.min(8, 0.9 / Math.max((x1 - x0) / 1200, (y1 - y0) / 800));
-                    const translate = [
-                        1200 / 2 - scale * (x0 + x1) / 2,
-                        800 / 2 - scale * (y0 + y1) / 2,
-                    ];
-    
-                    console.log("Zoom parameters:", { scale, translate }); // Debug log
-    
-                    // Apply the transformation programmatically using the zoom instance
-                    svg.transition().duration(750).call(
-                        zoom.transform,
-                        d3.zoomIdentity
-                            .translate(translate[0], translate[1])
-                            .scale(scale)
-                    );
+                if (!stateFeature) {
+                    console.warn(`No matching state found for: ${selectedState}`);
+                    return;
                 }
+    
+                console.log("State feature:", stateFeature); // Debug
+    
+                const path = pathRef.current;
+    
+                const [[x0, y0], [x1, y1]] = path.bounds(stateFeature);
+    
+                // Calculate the scale and translation
+                const scale = Math.min(8, 0.9 / Math.max((x1 - x0) / 1200, (y1 - y0) / 800));
+                const translate = [
+                    1200 / 2 - scale * (x0 + x1) / 2,
+                    800 / 2 - scale * (y0 + y1) / 2,
+                ];
+    
+                console.log("Zoom parameters:", { scale, translate }); // Debug
+                svg.transition().duration(750).call(
+                    zoom.transform,
+                    d3.zoomIdentity
+                        .translate(translate[0], translate[1])
+                        .scale(scale)
+                );
             })
             .catch((error) => {
                 console.error("Error loading US states JSON:", error);
@@ -170,14 +197,14 @@ const TornadoMap = ({ data }) => {
     }, [selectedState]);
 
     const handleFilterChange = ({ state, strength }) => {
-        // Filter the data based on the selected state and strength
+        //filter
         const filtered = data.filter((d) => {
             const matchesState = state === "all" || d.STATE === state;
             const matchesStrength = strength === "all" || d.TOR_F_SCALE === strength;
             return matchesState && matchesStrength;
         });
 
-        // Only update filteredData if the filtered result is different
+        // prevent duplicate filters
         setFilteredData((prevFilteredData) => {
             if (JSON.stringify(prevFilteredData) !== JSON.stringify(filtered)) {
                 return filtered;
@@ -187,7 +214,11 @@ const TornadoMap = ({ data }) => {
     };
 
     return (
-        <div>
+        <div className="tornado-map-container">
+            <h2 style={{ textAlign: "center", marginBottom: "20px" }}>Tornado Map - Interactive</h2>
+            <p style={{ textAlign: "center", marginBottom: "20px" }}>
+                This map is interactive. If you select an EF scale, the map will show only tornadoes with that strength. If you select a state, the map will only show tornadoes in that state, and will zoom in to show the state closer. If you hover over a dot, it will show you a tooltip with specific information about that tornado.
+            </p>
             <Filters
                 data={data}
                 onFilterChange={handleFilterChange}
@@ -200,12 +231,31 @@ const TornadoMap = ({ data }) => {
                     position: "absolute",
                     opacity: 0,
                     background: "#fff",
+                    color: "#000",
                     padding: "5px",
                     border: "1px solid #ccc",
                     borderRadius: "5px",
                     pointerEvents: "none",
+                    fontSize: "12px",
+                    fontWeight: "bold",
                 }}
             ></div>
+            {/* Add the legend */}
+            <div id="legend" style={{ marginTop: "10px", display: "flex", gap: "10px" }}>
+                {EF_SCALE_COLORS.map((item) => (
+                    <div key={item.scale} style={{ display: "flex", alignItems: "center", gap: "5px" }}>
+                        <div
+                            style={{
+                                width: "20px",
+                                height: "20px",
+                                backgroundColor: item.color,
+                                border: "1px solid #ccc",
+                            }}
+                        ></div>
+                        <span style={{ fontSize: "12px", fontWeight: "bold" }}>{item.scale}</span>
+                    </div>
+                ))}
+            </div>
         </div>
     );
 };

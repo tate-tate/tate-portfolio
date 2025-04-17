@@ -1,10 +1,14 @@
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import * as d3 from "d3";
 
 const TornadoShape = ({ data }) => {
     const svgRef = useRef(null);
+    const [isDarkMode, setIsDarkMode] = useState(() => {
+        // Default to dark mode if the "dark-mode" class is present on the body
+        return document.body.classList.contains("dark-mode");
+    });
 
-    useEffect(() => {
+    const renderVisualization = (darkMode) => {
         if (!data || data.length === 0) {
             console.warn("No data provided to TornadoShape.");
             return;
@@ -54,6 +58,10 @@ const TornadoShape = ({ data }) => {
             .range([0, height])
             .padding(0.2); // Add spacing between bars
 
+        // Define colors based on the mode
+        const barColor = darkMode ? "#d3d3d3" : "#4a4a4a"; // Light gray in dark mode, dark gray in light mode
+        const textColor = darkMode ? "#f8f9fa" : "#212529"; // White text in dark mode, black text in light mode
+
         // Append bars with animation
         svg.selectAll("rect")
             .data(tornadoCountsWithDefaults)
@@ -63,7 +71,7 @@ const TornadoShape = ({ data }) => {
             .attr("y", (d) => yScale(d.scale))
             .attr("width", 0) // Start with zero width
             .attr("height", yScale.bandwidth())
-            .attr("fill", "#ffffff")
+            .attr("fill", barColor)
             .attr("opacity", 0) // Start fully transparent
             .transition() // Add transition for animation
             .duration(1000) // Animation duration (1 second)
@@ -81,18 +89,34 @@ const TornadoShape = ({ data }) => {
             .attr("y", (d) => yScale(d.scale) + yScale.bandwidth() / 2)
             .attr("dy", "0.35em") // Center text vertically
             .attr("text-anchor", "middle")
-            .attr("fill", "#ffffff")
+            .attr("fill", textColor)
             .attr("opacity", 0) // Start fully transparent
             .text((d) => `${d.scale}: ${d.count}`)
             .transition() // Add transition for animation
             .duration(1000) // Animation duration (1 second)
             .delay((d, i) => i * 200) // Stagger the animation for each label
             .attr("opacity", 1); // Fade in
+    };
+
+    useEffect(() => {
+        renderVisualization(isDarkMode);
     }, [data]);
 
-    // Helper function to convert EF scale to a number for sorting
+    useEffect(() => {
+        const observer = new MutationObserver(() => {
+            const darkMode = document.body.classList.contains("dark-mode");
+            setIsDarkMode(darkMode);
+            renderVisualization(darkMode);
+        });
+
+        observer.observe(document.body, { attributes: true, attributeFilter: ["class"] });
+
+        return () => observer.disconnect();
+    }, []);
+
+    //  function to convert EF scale to a number for sorting
     const scaleToNumber = (scale) => {
-        if (scale === "EFU") return 6; // EFU (unknown) is treated as the last scale
+        if (scale === "EFU") return 6; // EFU (unknown)
         return +scale.replace("EF", "");
     };
 

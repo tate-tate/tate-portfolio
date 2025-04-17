@@ -17,6 +17,18 @@ html, body {
     scroll-behavior: smooth;
 }
 
+/* Light Mode Styles for html and body */
+.light-mode html, .light-mode body {
+    background-color: #f8f9fa; /* Light mode background */
+    color: #212529; /* Light mode text color */
+}
+
+/* Dark Mode Styles for html and body */
+.dark-mode html, .dark-mode body {
+    background-color: #212529; /* Dark mode background */
+    color: #f8f9fa; /* Dark mode text color */
+}
+
 .container {
     max-width: 1200px;
     margin: 0 auto;
@@ -68,10 +80,7 @@ html, body {
     color: #212529;
 }
 
-.light-mode .section {
-    background-color: #ffffff;
-    color: #212529;
-}
+
 
 /* Dark Mode Styles */
 .dark-mode {
@@ -97,7 +106,81 @@ html, body {
     color: #f8f9fa;
 }
 
+
+/* Ensure the parent container dynamically adjusts */
+.light-mode #map-container, .light-mode .chart {
+    background-color: #ffffff; /* Light mode background */
+}
+
+.dark-mode #map-container, .dark-mode .chart {
+    background-color: #212529; /* Dark mode background */
+}
+/* Ensure all parent containers have a transparent or dynamic background */
+#map-container, .chart {
+    background-color: transparent !important;
+    overflow: visible; /* Allow the tooltip to extend beyond the container */
+}
+
+.light-mode #map-container, .light-mode .chart {
+    background-color: #ffffff; /* Light mode background */
+}
+
+.dark-mode #map-container, .dark-mode .chart {
+    background-color: #212529; /* Dark mode background */
+}
+/* Ensure the map container is properly constrained */
+#map-container, .chart {
+    position: relative; /* Constrain the map to its section */
+    z-index: 1; /* Ensure it doesn't overlap other sections */
+    overflow: hidden; /* Prevent the map from spilling out */
+}
+
+/* Ensure the light section has a proper height and background */
+.light-mode .section {
+    background-color: #ffffff; /* Light mode background */
+    color: #212529;
+    position: relative;
+    z-index: 2; /* Ensure it sits above the map */
+}
+
+/* Ensure the dark section has a proper height and background */
 .dark-mode .section {
-    background-color: #343a40;
+    background-color: #212529; /* Dark mode background */
     color: #f8f9fa;
+    position: relative;
+    z-index: 2; /* Ensure it sits above the map */
+}
+
+/* Center the map container */
+#map {
+    margin: 0 auto; /* Center the map horizontally */
+    display: block; /* Ensure the map container behaves like a block element */
+    width: 1200px; /* Set a fixed width for the map */
+    height: 800px; /* Set a fixed height for the map */
+    position: relative; /* Ensure proper positioning for child elements */
+}
+
+/* Optional: Center the entire TornadoMap component */
+.tornado-map-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Center content horizontally */
+    justify-content: center; /* Center content vertically if needed */
+    margin: 0 auto; /* Center the container on the page */
+    padding: 20px; /* Add some padding around the container */
+    max-width: 1200px; /* Limit the width of the container */
+}
+/* Add this to your CSS file */
+#tooltip {
+    position: absolute;
+    opacity: 0; /* Hidden by default */
+    background: #fff;
+    color: #000;
+    padding: 5px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    pointer-events: none; /* Prevent the tooltip from interfering with mouse events */
+    font-size: 12px;
+    font-weight: bold;
+    z-index: 1000; /* Ensure it appears above other elements */
 }

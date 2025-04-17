@@ -83,18 +83,21 @@ const TornadoStats = ({ data, selectedState = "all" }) => {
 
     return (
         <div id="tornadoStats" className="stats-box">
-            <h2>2024 Tornado Notes</h2>
+            <h1>2024 in Tornadoes - a d3.js Visualization</h1>
             <div id="tornadoNotes">
-                <h3>Overview</h3>
-                <p>State: {selectedState === "all" ? "All States" : selectedState}</p>
-                <p>Total Tornadoes: {stats.totalTornadoes}</p>
-                <p>Total Injuries: {stats.totalInjuries}</p>
-                <p>Total Deaths: {stats.totalDeaths}</p>
-                <p>Total Damage: ${stats.totalDamage} (Property + Crops)</p>
-                <p>Longest Tornado Path: {stats.longestPath}</p>
-                <p>Widest Tornado: {stats.widestTornado}</p>
-                <p>Average EF Scale: {stats.averageEFScale}</p>
-                <p>Strongest Tornado: {stats.strongestTornado === "N/A" ? "N/A" : `EF${stats.strongestTornado}`}</p>
+                <br></br>
+                <h2>Overview</h2>
+                <p>
+                    The tornado data (provided by NOAA) for 2024 is visualized using D3.js. The statistics below provide an overview of the
+                    tornadoes that occurred in across the US. </p>
+                <p><strong>Total Tornadoes:</strong> {stats.totalTornadoes} - The visualization to the right is a modified bar chart that shows the number of tornadoes per strength. EFU indicates that the strength was not determined.</p>
+                <p><strong>Total Injuries (Direct & Indirect):</strong> {stats.totalInjuries}</p>
+                <p><strong>Total Deaths (Direct & Indirect):</strong> {stats.totalDeaths}</p>
+                <p><strong>Total Damage:</strong> ${stats.totalDamage} (Property + Crops)</p>
+                <p><strong>Longest Tornado Path:</strong> {stats.longestPath}</p>
+                <p><strong>Widest Tornado:</strong> {stats.widestTornado}</p>
+                <p><strong>Note:</strong> Damage stats are not entirely accurate - as you will see on many of the map tooltips, reported damage was $0 - while this may be true occaisionally, it typically means that damage was not officially recorded by NOAA.</p>
+
             </div>
         </div>
     );
