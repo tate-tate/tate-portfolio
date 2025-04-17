@@ -41,7 +41,7 @@ const Navbar = () => {
           onMouseLeave={() => setDropdownOpen(false)}
         >
           <Link to="/current-works">Current Works</Link>
-          {dropdownOpen && (
+           {dropdownOpen && (
             <ul className="dropdown-menu">
               <li><Link to="/d3-vis">D3 Visualization</Link></li>
             </ul>

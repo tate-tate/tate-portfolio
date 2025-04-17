@@ -8,15 +8,19 @@ import * as d3 from "d3";
 export const processTornadoData = (csvData) => {
     return csvData.map((d) => ({
         ...d,
-        TOR_F_SCALE: d.TOR_F_SCALE ? +d.TOR_F_SCALE.replace("EF", "") : null,
-        BEGIN_LAT: +d.BEGIN_LAT,
-        BEGIN_LON: +d.BEGIN_LON,
+        TOR_F_SCALE: d.TOR_F_SCALE && d.TOR_F_SCALE.startsWith("EF") ? d.TOR_F_SCALE : "EFU",
+        BEGIN_LAT: +d.BEGIN_LAT || null,
+        BEGIN_LON: +d.BEGIN_LON || null,
         INJURIES_DIRECT: +d.INJURIES_DIRECT || 0,
         INJURIES_INDIRECT: +d.INJURIES_INDIRECT || 0,
         DEATHS_DIRECT: +d.DEATHS_DIRECT || 0,
         DEATHS_INDIRECT: +d.DEATHS_INDIRECT || 0,
         TOTAL_INJURIES: (+d.INJURIES_DIRECT || 0) + (+d.INJURIES_INDIRECT || 0),
         TOTAL_DEATHS: (+d.DEATHS_DIRECT || 0) + (+d.DEATHS_INDIRECT || 0),
+        DAMAGE_PROPERTY: parseFloat(d.DAMAGE_PROPERTY) || 0,
+        DAMAGE_CROPS: parseFloat(d.DAMAGE_CROPS) || 0,
+        TOR_LENGTH: parseFloat(d.TOR_LENGTH) || 0,
+        TOR_WIDTH: parseFloat(d.TOR_WIDTH) || 0,
     }));
 };
 
@@ -26,8 +30,8 @@ export const processTornadoData = (csvData) => {
  */
 export const createColorScale = () => {
     return d3.scaleOrdinal()
-        .domain([1, 2, 3, 4, 5])
-        .range(["#4FEB00", "#D7EA00", "#EBA600", "#EA4700", "#EB0101"]);
+        .domain(["EF0", "EF1", "EF2", "EF3", "EF4", "EFU"])
+        .range(["#00FF00", "#FFFF00", "#FFA500", "#FF4500", "#FF0000", "#808080"]); // Traffic light + grey for EFU
 };
 
 /**
@@ -57,7 +61,7 @@ export const filterTornadoData = (data, state, strength) => {
     }
 
     if (strength !== "all") {
-        filteredData = filteredData.filter((d) => d.TOR_F_SCALE === +strength);
+        filteredData = filteredData.filter((d) => d.TOR_F_SCALE === strength);
     }
 
     return filteredData;
@@ -72,18 +76,27 @@ export const calculateStateStats = (data) => {
     const totalTornadoes = data.length;
     const totalInjuries = data.reduce((sum, d) => sum + d.TOTAL_INJURIES, 0);
     const totalDeaths = data.reduce((sum, d) => sum + d.TOTAL_DEATHS, 0);
-    const averageEFScale = totalTornadoes > 0
-        ? (data.reduce((sum, d) => sum + d.TOR_F_SCALE, 0) / totalTornadoes).toFixed(2)
-        : "N/A";
-    const strongestTornado = totalTornadoes > 0
-        ? Math.max(...data.map((d) => d.TOR_F_SCALE))
-        : "N/A";
+    const totalDamage = data.reduce((sum, d) => sum + d.DAMAGE_PROPERTY + d.DAMAGE_CROPS, 0).toFixed(2);
+    const longestPath = Math.max(...data.map((d) => d.TOR_LENGTH || 0)).toFixed(2);
+    const widestTornado = Math.max(...data.map((d) => d.TOR_WIDTH || 0)).toFixed(2);
+
+    const efScales = data
+        .filter((d) => d.TOR_F_SCALE && d.TOR_F_SCALE.startsWith("EF"))
+        .map((d) => parseInt(d.TOR_F_SCALE.replace("EF", ""), 10));
+    const averageEFScale =
+        efScales.length > 0
+            ? (efScales.reduce((sum, scale) => sum + scale, 0) / efScales.length).toFixed(1)
+            : "N/A";
+    const strongestTornado = efScales.length > 0 ? Math.max(...efScales) : "N/A";
 
     return {
         totalTornadoes,
         totalInjuries,
         totalDeaths,
+        totalDamage,
+        longestPath: `${longestPath} miles`,
+        widestTornado: `${widestTornado} yards`,
         averageEFScale,
-        strongestTornado,
+        strongestTornado: strongestTornado === "N/A" ? "N/A" : `EF${strongestTornado}`,
     };
 };

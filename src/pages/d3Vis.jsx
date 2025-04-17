@@ -1,21 +1,35 @@
 import React, { useState, useEffect } from "react";
-import TornadoMap from "../components/TornadoMap";
+import * as d3 from "d3";
+import styles from "../styles/d3Vis.module.css";
 import TornadoStats from "../components/TornadoStats";
 import TornadoShape from "../components/TornadoShape";
+import TornadoMap from "../components/TornadoMap";
 import Filters from "../components/Filters";
-import styles from "../styles/d3Vis.module.css";
-import { processTornadoData } from "../utils/d3Helpers";
 
 const D3Vis = () => {
-    const [data, setData] = useState([]);
-    const [filteredData, setFilteredData] = useState([]);
-    const [selectedState, setSelectedState] = useState("all");
+    const [data, setData] = useState([]); // State to hold the tornado data
+    const [filteredData, setFilteredData] = useState([]); // State for filtered data
+    const [selectedState, setSelectedState] = useState("all"); // State for selected state
+
+    const projection = d3.geoAlbersUsa().scale(1500).translate([600, 400]); // Map projection
 
     useEffect(() => {
-        d3.csv("/assets/data/2024weatherdata.csv").then((csvData) => {
-            const processedData = processTornadoData(csvData);
+        d3.csv("/assets/data/2024tornadoes.csv").then((csvData) => {
+            const processedData = csvData.map((d) => ({
+                ...d,
+                TOR_F_SCALE: d.TOR_F_SCALE ? d.TOR_F_SCALE.trim() : "EFU", // Trim and handle missing values
+                BEGIN_LAT: +d.BEGIN_LAT,
+                BEGIN_LON: +d.BEGIN_LON,
+                INJURIES_DIRECT: +d.INJURIES_DIRECT || 0,
+                INJURIES_INDIRECT: +d.INJURIES_INDIRECT || 0,
+                DEATHS_DIRECT: +d.DEATHS_DIRECT || 0,
+                DEATHS_INDIRECT: +d.DEATHS_INDIRECT || 0,
+                TOTAL_INJURIES: (+d.INJURIES_DIRECT || 0) + (+d.INJURIES_INDIRECT || 0),
+                TOTAL_DEATHS: (+d.DEATHS_DIRECT || 0) + (+d.DEATHS_INDIRECT || 0),
+            }));
+    
             setData(processedData);
-            setFilteredData(processedData);
+            setFilteredData(processedData); // Initially, filtered data is the same as the full data
         });
     }, []);
 
@@ -27,12 +41,15 @@ const D3Vis = () => {
         <div className={styles.container}>
             <h1>Tornadic Events in 2024</h1>
             <div className={styles.row}>
-                <TornadoStats data={filteredData} selectedState={selectedState} />
-                <TornadoShape data={filteredData} />
+                {filteredData.length > 0 && (
+                    <>
+                        <TornadoStats data={filteredData} selectedState={selectedState} />
+                        <TornadoShape data={filteredData} projection={projection} />
+                    </>
+                )}
             </div>
             <div className={styles.row}>
-                <TornadoMap />
-                <Filters data={data} onFilterChange={handleFilterChange} />
+                <TornadoMap data={filteredData} />
             </div>
         </div>
     );
