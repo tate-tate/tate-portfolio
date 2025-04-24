@@ -4,7 +4,6 @@ import * as d3 from "d3";
 const TornadoShape = ({ data }) => {
     const svgRef = useRef(null);
     const [isDarkMode, setIsDarkMode] = useState(() => {
-        // Default to dark mode if the "dark-mode" class is present on the body
         return document.body.classList.contains("dark-mode");
     });
 
@@ -21,7 +20,6 @@ const TornadoShape = ({ data }) => {
         // Clear existing elements
         svg.selectAll("*").remove();
 
-        // Group tornadoes by EF scale
         const groupedData = d3.rollup(
             data,
             (v) => v.length,
@@ -38,47 +36,47 @@ const TornadoShape = ({ data }) => {
             return scaleA - scaleB;
         });
 
-        // Ensure all EF scales (EF0 to EF5) are included, even if they have 0 occurrences
+        //define an include scales
         const allScales = ["EF0", "EF1", "EF2", "EF3", "EF4", "EF5", "EFU"];
         const tornadoCountsWithDefaults = allScales.map((scale) => ({
             scale,
             count: tornadoCounts.find((d) => d.scale === scale)?.count || 0,
         }));
 
-        // Create scales
+        // Create scales for vis
         const maxCount = d3.max(tornadoCountsWithDefaults, (d) => d.count);
         const taperScale = d3
             .scaleLinear()
-            .domain([0, tornadoCountsWithDefaults.length - 1]) // From top (EF0) to bottom (EFU)
-            .range([width * 0.8, width * 0.2]); // Bars taper from 80% to 20% of the width
+            .domain([0, tornadoCountsWithDefaults.length - 1])
+            .range([width * 0.8, width * 0.2]);
 
         const yScale = d3
             .scaleBand()
             .domain(tornadoCountsWithDefaults.map((d) => d.scale))
             .range([0, height])
-            .padding(0.2); // Add spacing between bars
+            .padding(0.2);
 
         // Define colors based on the mode
-        const barColor = darkMode ? "#d3d3d3" : "#4a4a4a"; // Light gray in dark mode, dark gray in light mode
-        const textColor = darkMode ? "#f8f9fa" : "#212529"; // White text in dark mode, black text in light mode
+        const barColor = darkMode ? "#d3d3d3" : "#4a4a4a";
+        const textColor = darkMode ? "#f8f9fa" : "#212529";
 
         // Append bars with animation
         svg.selectAll("rect")
             .data(tornadoCountsWithDefaults)
             .enter()
             .append("rect")
-            .attr("x", width / 2) // Start at the center
+            .attr("x", width / 2)
             .attr("y", (d) => yScale(d.scale))
-            .attr("width", 0) // Start with zero width
+            .attr("width", 0)
             .attr("height", yScale.bandwidth())
             .attr("fill", barColor)
-            .attr("opacity", 0) // Start fully transparent
-            .transition() // Add transition for animation
-            .duration(1000) // Animation duration (1 second)
-            .delay((d, i) => i * 200) // Stagger the animation for each bar
-            .attr("x", (d, i) => width / 2 - taperScale(i) / 2) // Animate to centered position
-            .attr("width", (d, i) => taperScale(i)) // Animate to full width
-            .attr("opacity", 0.8); // Fade in
+            .attr("opacity", 0)
+            .transition()
+            .duration(1000) 
+            .delay((d, i) => i * 200) 
+            .attr("x", (d, i) => width / 2 - taperScale(i) / 2) 
+            .attr("width", (d, i) => taperScale(i))
+            .attr("opacity", 0.8); 
 
         // Append labels for EF scales with animation
         svg.selectAll("text")
@@ -87,15 +85,15 @@ const TornadoShape = ({ data }) => {
             .append("text")
             .attr("x", width / 2)
             .attr("y", (d) => yScale(d.scale) + yScale.bandwidth() / 2)
-            .attr("dy", "0.35em") // Center text vertically
+            .attr("dy", "0.35em")
             .attr("text-anchor", "middle")
             .attr("fill", textColor)
-            .attr("opacity", 0) // Start fully transparent
+            .attr("opacity", 0) 
             .text((d) => `${d.scale}: ${d.count}`)
-            .transition() // Add transition for animation
-            .duration(1000) // Animation duration (1 second)
-            .delay((d, i) => i * 200) // Stagger the animation for each label
-            .attr("opacity", 1); // Fade in
+            .transition()
+            .duration(1000) 
+            .delay((d, i) => i * 200)
+            .attr("opacity", 1);
     };
 
     useEffect(() => {

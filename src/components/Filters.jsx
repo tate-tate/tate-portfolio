@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import "../styles/filters.css"; // Import your CSS styles for the filters
+import "../styles/filters.css";
 
 const Filters = ({ data, onFilterChange, onStateChange }) => {
     const [state, setState] = useState("all");

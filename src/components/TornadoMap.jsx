@@ -87,7 +87,7 @@ const TornadoMap = ({ data }) => {
             EF4: "#FF0000",
             EFU: "#808080",
         };
-    
+        //event circles on map
         mapGroup.selectAll("circle")
             .data(filteredData)
             .enter()
@@ -104,17 +104,26 @@ const TornadoMap = ({ data }) => {
             .attr("fill", (d) => colorScale[d.TOR_F_SCALE] || "#808080")
             .attr("opacity", 0.6)
             .on("mouseover", (event, d) => {
+                // Format date & time
+                const yearMonth = d.BEGIN_YEARMONTH.toString();
+                const year = yearMonth.slice(0, 4);
+                const month = yearMonth.slice(4, 6);
+                const day = d.BEGIN_DAY.toString().padStart(2, "0");
+                const time = d.BEGIN_TIME.toString().padStart(4, "0");
+                const formattedTime = `${time.slice(0, 2)}:${time.slice(2)}`;
+                const formattedDate = `${month}/${day}/${year} ${formattedTime}`;
                 d3.select("#tooltip")
                     .style("opacity", 1)
                     .html(`
                         <div style="font-size: 14px; font-weight: bold;">Tornado Details</div>
                         <strong>State:</strong> ${d.STATE}<br>
                         <strong>EF Scale:</strong> ${d.TOR_F_SCALE}<br>
+                        <strong>Date:</strong> ${formattedDate}<br>
                         <strong>Latitude:</strong> ${d.BEGIN_LAT}<br>
                         <strong>Longitude:</strong> ${d.BEGIN_LON}<br>
-                        <strong>Injuries:</strong> ${d.TOTAL_INJURIES}<br>
-                        <strong>Deaths:</strong> ${d.TOTAL_DEATHS}<br>
-                        <strong>Property and Crop Damage:</strong> $${d.TOTAL_DAMAGE}<br>
+                        <strong>Injuries:</strong> ${d.INJURIES_DIRECT}<br>
+                        <strong>Deaths:</strong> ${d.DEATHS_DIRECT}<br>
+                        <strong>Property Damage:</strong> $${d.DAMAGE_PROPERTY_CONV || 0}<br>
                     `);
             })
             .on("mousemove", (event) => {
@@ -136,7 +145,6 @@ const TornadoMap = ({ data }) => {
     }, [filteredData]);
 
     useEffect(() => {
-        console.log("Selected state:", selectedState); // Debug
     
         if (!pathRef.current || !mapGroupRef.current || !svgRef.current || !zoomRef.current) return;
     
@@ -148,7 +156,7 @@ const TornadoMap = ({ data }) => {
             // Reset the zoom to show the entire map
             svg.transition().duration(750).call(
                 zoom.transform,
-                d3.zoomIdentity // Reset to the default zoom state
+                d3.zoomIdentity
             );
             mapGroup.transition().duration(750).attr("transform", "translate(0, 0) scale(1)");
             return;
@@ -156,10 +164,10 @@ const TornadoMap = ({ data }) => {
     
         d3.json("/assets/data/us-states.json")
             .then((us) => {
-                console.log("GeoJSON features:", us.features); // Debug
-                console.log("Example feature properties:", us.features[0]?.properties); // Debug
+                //console.log("GeoJSON features:", us.features); // Debug
+                //console.log("Example feature properties:", us.features[0]?.properties); // Debug
     
-                // Find the state feature by matching the selectedState
+                // Find the state on map by matching the selectedState
                 const stateFeature = us.features.find(
                     (feature) =>
                         feature.properties?.NAME?.toLowerCase() === selectedState.toLowerCase()
@@ -183,7 +191,7 @@ const TornadoMap = ({ data }) => {
                     800 / 2 - scale * (y0 + y1) / 2,
                 ];
     
-                console.log("Zoom parameters:", { scale, translate }); // Debug
+                //console.log("Zoom parameters:", { scale, translate }); // Debug
                 svg.transition().duration(750).call(
                     zoom.transform,
                     d3.zoomIdentity
@@ -213,7 +221,7 @@ const TornadoMap = ({ data }) => {
         });
     };
 
-    return (
+    return ( //component return, renders map
         <div className="tornado-map-container">
             <h2 style={{ textAlign: "center", marginBottom: "20px" }}>Tornado Map - Interactive</h2>
             <p style={{ textAlign: "center", marginBottom: "20px" }}>
