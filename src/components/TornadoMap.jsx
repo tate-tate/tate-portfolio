@@ -2,6 +2,17 @@ import React, { useEffect, useState, useRef } from "react";
 import * as d3 from "d3";
 import Filters from "./Filters";
 
+export const EF_SCALE_COLORS = [ //export colors for timeline
+    { scale: "EF0", color: "#00FF00" },
+    { scale: "EF1", color: "#FFFF00" },
+    { scale: "EF2", color: "#FFA500" }, 
+    { scale: "EF3", color: "#FF4500" }, 
+    { scale: "EF4", color: "#FF0000" }, 
+    { scale: "EFU", color: "#808080" }, 
+];
+
+
+
 const TornadoMap = ({ data }) => {
     const [filteredData, setFilteredData] = useState(data);
     const [selectedState, setSelectedState] = useState("all");
@@ -12,14 +23,6 @@ const TornadoMap = ({ data }) => {
     const projectionRef = useRef(null);
     const pathRef = useRef(null);
     const zoomRef = useRef(null);
-    const EF_SCALE_COLORS = [ //legend colors
-        { scale: "EF0", color: "#00FF00" }, // Green
-        { scale: "EF1", color: "#FFFF00" }, // Yellow
-        { scale: "EF2", color: "#FFA500" }, // Orange
-        { scale: "EF3", color: "#FF4500" }, // Dark Orange
-        { scale: "EF4", color: "#FF0000" }, // Red
-        { scale: "EFU", color: "#808080" }, // Grey (Unknown)
-    ];
 
     useEffect(() => {
         const width = 1200;
@@ -117,6 +120,7 @@ const TornadoMap = ({ data }) => {
                     .html(`
                         <div style="font-size: 14px; font-weight: bold;">Tornado Details</div>
                         <strong>State:</strong> ${d.STATE}<br>
+                        <strong>City:</strong> ${d.BEGIN_LOCATION || "Unknown"}<br>
                         <strong>EF Scale:</strong> ${d.TOR_F_SCALE}<br>
                         <strong>Date:</strong> ${formattedDate}<br>
                         <strong>Latitude:</strong> ${d.BEGIN_LAT}<br>
@@ -135,8 +139,8 @@ const TornadoMap = ({ data }) => {
 
                 // Adjust tooltip position relative to the map container and scaling
                 tooltip
-                    .style("left", `${(event.clientX - mapRect.left) * scale + 10}px`) // Offset 10px to the right of the cursor
-                    .style("top", `${(event.clientY - mapRect.top) * scale + 10}px`); // Offset 10px below the cursor
+                    .style("left", `${(event.clientX - mapRect.left) * scale + 10}px`)
+                    .style("top", `${(event.clientY - mapRect.top) * scale + 10}px`); 
             })
             .on("mouseout", () => {
                 d3.select("#tooltip")
@@ -145,13 +149,12 @@ const TornadoMap = ({ data }) => {
     }, [filteredData]);
 
     useEffect(() => {
-    
         if (!pathRef.current || !mapGroupRef.current || !svgRef.current || !zoomRef.current) return;
-    
+
         const mapGroup = mapGroupRef.current;
         const svg = svgRef.current;
         const zoom = zoomRef.current;
-    
+
         if (selectedState === "all") {
             // Reset the zoom to show the entire map
             svg.transition().duration(750).call(
@@ -161,37 +164,30 @@ const TornadoMap = ({ data }) => {
             mapGroup.transition().duration(750).attr("transform", "translate(0, 0) scale(1)");
             return;
         }
-    
+
         d3.json("/assets/data/us-states.json")
             .then((us) => {
-                //console.log("GeoJSON features:", us.features); // Debug
-                //console.log("Example feature properties:", us.features[0]?.properties); // Debug
-    
-                // Find the state on map by matching the selectedState
                 const stateFeature = us.features.find(
                     (feature) =>
                         feature.properties?.NAME?.toLowerCase() === selectedState.toLowerCase()
                 );
-    
+
                 if (!stateFeature) {
                     console.warn(`No matching state found for: ${selectedState}`);
                     return;
                 }
-    
-                console.log("State feature:", stateFeature); // Debug
-    
+
                 const path = pathRef.current;
-    
+
                 const [[x0, y0], [x1, y1]] = path.bounds(stateFeature);
-    
+
                 // Calculate the scale and translation
                 const scale = Math.min(8, 0.9 / Math.max((x1 - x0) / 1200, (y1 - y0) / 800));
                 const translate = [
                     1200 / 2 - scale * (x0 + x1) / 2,
                     800 / 2 - scale * (y0 + y1) / 2,
                 ];
-    
-                //console.log("Zoom parameters:", { scale, translate }); // Debug
+
                 svg.transition().duration(750).call(
                     zoom.transform,
                     d3.zoomIdentity

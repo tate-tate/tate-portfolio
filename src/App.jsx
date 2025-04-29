@@ -7,7 +7,7 @@ import NotFound from './pages/NotFound';
 import CurrentWorks from './pages/CurrentWorks';
 import Personal from './pages/Personal';
 import OtherProjects from './pages/OtherProjects';
-import D3Vis from './pages/D3Vis';
+import D3Vis from './pages/d3Vis';
 
 function App() {
   return (

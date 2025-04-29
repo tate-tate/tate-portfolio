@@ -1,3 +1,16 @@
+:root {
+    --axis-text-color: #333; /* Default axis text color */
+    --axis-line-color: #ccc; /* Default axis line color */
+    --tick-hover-color: #666; /* Default tick hover color */
+}
+
+/* Dark mode overrides */
+body.dark-mode {
+    --axis-text-color: #ddd;
+    --axis-line-color: #555;
+    --tick-hover-color: #aaa;
+}
+
 .app {
   display: flex;
   flex-direction: column;

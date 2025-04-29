@@ -5,6 +5,7 @@ import TornadoStats from "../components/TornadoStats";
 import TornadoShape from "../components/TornadoShape";
 import TornadoMap from "../components/TornadoMap";
 import Filters from "../components/Filters";
+import TimelineChart from "../components/TimelineChart";
 
 const D3Vis = () => {
     const [data, setData] = useState([]); // State to hold the tornado data
@@ -54,6 +55,7 @@ const D3Vis = () => {
             <div className={styles.mapSection}>
                 <TornadoMap data={filteredData} />
             </div>
+            <TimelineChart data={filteredData} />
         </div>
     );
 };
