@@ -8,6 +8,7 @@ import CurrentWorks from './pages/CurrentWorks';
 import Personal from './pages/Personal';
 import OtherProjects from './pages/OtherProjects';
 import D3Vis from './pages/d3Vis';
+import Quicklinks from './pages/quicklinks';
 
 function App() {
   return (
@@ -24,6 +25,7 @@ function App() {
           <Route path="/personal" element={<Personal />} />
           <Route path="*" element={<NotFound />} />
           <Route path="/d3-vis" element={<D3Vis />} />
+          <Route path="/quicklinks" element={<Quicklinks />} />
           </Routes>
       </main>
     </HashRouter>

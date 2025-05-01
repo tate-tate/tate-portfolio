@@ -1,0 +1,41 @@
+.row {
+    display: flex;
+    flex-direction: row;
+    justify-content: center; /* Center items in the row */
+    align-items: flex-start; /* Align items to the top */
+    gap: 20px; /* Add spacing between items */
+    flex-wrap: wrap; /* Allow items to wrap to the next line if needed */
+    margin-bottom: 2rem; /* Add spacing between rows */
+}
+.sectiontitle {
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+    text-align: center; /* Align section titles to the left */
+}
+.thumbnail {
+    width: 100px; /* Adjust thumbnail size */
+    height: 100px;
+    border-radius: 5px;
+    object-fit: cover; /* Ensure images maintain aspect ratio */
+    flex-shrink: 0; /* Prevent thumbnails from shrinking */
+}
+.thumbnail:hover {
+    transform: scale(1.05);
+    transition: transform 0.3s ease;
+}
+.thumbnailtext {
+    text-align: center;
+    font-size: 1rem; /* Adjust font size */
+    margin-top: 10px; /* Add spacing above text */
+    width: 150px; /* Match thumbnail width */
+}
+.thumbnailcontainer {
+    display: flex;
+    flex-direction: column; /* Stack thumbnail and text vertically */
+    align-items: center; /* Center align thumbnail and text */
+    flex-shrink: 0; /* Prevent containers from shrinking */
+}
+.divider {
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+}
