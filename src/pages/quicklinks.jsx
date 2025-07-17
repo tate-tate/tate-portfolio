@@ -76,7 +76,35 @@ const Quicklinks = () => {
                 <h2 className={style.sectiontitle}>Entertainment</h2>
                 <hr className={style.divider}></hr>
                 </FadeIn>
-                
+                <div className={style.row}>
+                <FadeIn duration={1000} delay={1150}>
+                    <div className={style.thumbnailcontainer}>
+                        <a href="https://www.discoveryplus.com">
+                            <img className={style.thumbnail} src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQCC5HJgyKOpWFjvw8RC_-DextsdBQef_-6Zg&s">
+                            </img>
+                        </a>
+                            <p className={style.thumbnailtext}>Discovery+</p>
+                    </div>
+                </FadeIn>
+                <FadeIn duration={1000} delay={1200}>
+                    <div className={style.thumbnailcontainer}>
+                        <a href="https://www.hulu.com">
+                            <img className={style.thumbnail} src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQjWDI2Ee2YMRvznZs8i8FS15M7yFp1auJxwQ&s">
+                            </img>
+                        </a>
+                            <p className={style.thumbnailtext}>Hulu</p>
+                    </div>
+                </FadeIn>
+                <FadeIn duration={1000} delay={1250}>
+                    <div className={style.thumbnailcontainer}>
+                        <a href="https://app.plex.tv">
+                            <img className={style.thumbnail} src="https://preview.redd.it/new-plex-logo-v0-5x93lknmuaw81.jpg?auto=webp&s=a8edd33ea3d1f38929c7917abea05291ad49f528">
+                            </img>
+                        </a>
+                            <p className={style.thumbnailtext}>Plex</p>
+                    </div>
+                </FadeIn>
+            </div>
             </Wrapper>
         </Wrapper>
     )
