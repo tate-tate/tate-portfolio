@@ -12,7 +12,7 @@ const HomePage = () => {
             <Wrapper>
                 <FadeIn duration={2000} delay={250}><h1>Hi, <FadeIn duration={2000} delay={750}>I'm Tate Sever.</FadeIn></h1></FadeIn>
                 <FadeIn duration={2000} delay={1250}>
-                <p>I am a senior studying Data Visualization & Information Technology at Purdue University.</p>
+                <p>I am a senior majoring in both Data Visualization & Web Programming at Purdue University.</p>
                 <p>This website serves as both a portfolio of my academic work and a dynamic resume, highlighting the skills I have acquired and continue to develop. With the ever-evolving nature of the technology industry, I am committed to continuous learning and growth.</p>
                 <p>Use the navigation bar above to view my works, both past and present; and to get in touch!</p>
                 </FadeIn>
