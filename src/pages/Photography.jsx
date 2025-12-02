@@ -19,24 +19,15 @@ import oib3 from "../assets/oib3.jpg";
 import oib4 from "../assets/oib4.jpg";
 import FadeIn from '../components/FadeIn';
 
-const Personal = () => {
+const Photography = () => {
   return (
     <FadeIn duration={1000} delay={100}>
     <Wrapper>
       <Wrapper>
-        <h1>Personal</h1>
-        <h3>More about me.</h3>
-        <p>I have devoted both my personal life and professional career to absorbing all technology has to offer, wether it be the next new piece of software, database systems, or simply just building myself a new computer. However, I have hobbies (sometimes!).</p>
-      </Wrapper>
-      <Wrapper>
-        <h1>The Elephant in The Room</h1>
-        <h3>Why are so many of my projects about Tornadoes?</h3>
-        <p>The answer to this is actually very simple - I am simply fascinated by the Weather. Funnily enough, my original life path was going to Purdue to become a meteorologist, and chase tornadoes across the country. I thorougly enjoyed my first semester at Purdue, and Atmospheric Science was a fantastic major to be in. However, I quickly learned that my skillset was more in the technological & analysis side of things, rather than the hard sciences (Chemistry, Physics, etc). After exploring other options, taking a semester full of gen-eds, and eventually changing my major twice again, I settled into Data Visualization and Information Technology - and even though this decision ended up adding a year to my studies, I am extremely satisfied where I am. However, I still have so much love in my heart for meteorology, and hope to continue with it in some regards. For now, that just means nerding out and making visualizations about it.</p>
-      </Wrapper>
-      <Wrapper>
         <h1>Photography</h1>
-        <h3>A collection of points in time.</h3>
+        <h3>A collection of points in time.</h3><br />
         <p>If I'm not behind a screen, you might find me out in the world shooting photos. I shoot on both 35mm film and digital - but these days, mostly digital. Below are some of my best shots. Click any image to enlarge.</p>
+        <p><strong>All photos are <u>raw and unedited</u>. The image viewer works best when viewed on a computer.</strong></p>
       </Wrapper>
       <Wrapper>
         <h2>Gary, IN - City Methodist Church</h2>
@@ -89,4 +80,4 @@ const Personal = () => {
   );
 };
 
-export default Personal;
+export default Photography;

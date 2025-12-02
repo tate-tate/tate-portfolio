@@ -11,7 +11,7 @@ const CurrentWorks = () => {
         <>
         <FadeIn duration={1000} delay={100}>
             <Wrapper>
-                <h1>Current Works - As of 2025</h1>
+                <h1>Current Works - As of Dec. 2025</h1>
                 <p>This page is a collection of projects I have recently completed, or am in the process of completing.</p>
             </Wrapper>
             <Wrapper>

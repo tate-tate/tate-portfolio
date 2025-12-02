@@ -30,10 +30,10 @@ const Navbar = () => {
         </button>
       </div>
       <ul className={`navbar-menu ${menuOpen ? 'open' : ''}`}>
-        <li><Link to="/current-works">Current Works</Link></li>
-        <li><Link to="/d3-vis">D3 Visualization</Link></li>
-        <li><Link to="/other-projects">Other Projects</Link></li>
-        <li><Link to="/personal">Personal</Link></li>
+        <li><Link to="/current-works">Working On</Link></li>
+        <li><Link to="/d3-vis">D3.js</Link></li>
+        <li><Link to="/other-projects">Past Projects</Link></li>
+        <li><Link to="/photography">Photography</Link></li>
         <li><a href="https://www.linkedin.com/in/gabriel-sever-dvis/">LinkedIN</a></li>
         <li><a href="mailto:gabrieltsever@gmail.com">Contact</a></li>
       </ul>
