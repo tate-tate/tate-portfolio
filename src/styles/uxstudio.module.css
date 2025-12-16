@@ -1,0 +1,48 @@
+.bullets {
+	margin: 0 0 1rem 1.25rem;
+}
+
+.bullets li {
+	margin-bottom: 0.4rem;
+}
+
+.imageNote {
+	color: #666;
+	font-size: 0.9rem;
+	margin: 0.5rem 0 0.75rem;
+}
+
+.imageWide {
+	width: 100%;
+	max-width: 1000px;
+	display: block;
+	margin: 0.5rem auto 1.25rem;
+	border-radius: 8px;
+}
+
+.imageRow {
+	display: flex;
+	gap: 1rem;
+	flex-wrap: wrap;
+	margin-bottom: 1.25rem;
+}
+
+.imageTall {
+	width: 100%;
+	max-width: 480px;
+	display: block;
+	border-radius: 8px;
+}
+
+.imageGrid {
+	display: grid;
+	grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+	gap: 1rem;
+	margin: 0.75rem 0 1.5rem;
+}
+
+.imageCard {
+	width: 100%;
+	display: block;
+	border-radius: 10px;
+}
