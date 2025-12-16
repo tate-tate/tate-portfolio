@@ -1,9 +1,18 @@
 .bullets {
-	margin: 0 0 1rem 1.25rem;
+  margin: 0 0 1rem 1.25rem;
 }
 
 .bullets li {
-	margin-bottom: 0.4rem;
+  margin-bottom: 0.4rem;
+}
+
+.privacyNote {
+  background-color: #f8f9fa;
+  border-left: 4px solid #6c757d;
+  padding: 1rem;
+  margin: 1rem 0;
+  font-size: 0.9rem;
+  color: #495057;
 }
 
 .imageNote {
