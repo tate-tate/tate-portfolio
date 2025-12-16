@@ -9,7 +9,7 @@ import Photography from './pages/Photography';
 import OtherProjects from './pages/OtherProjects';
 import D3Vis from './pages/d3Vis';
 import Quicklinks from './pages/quicklinks';
-import UXstudio from './pages/UXstudio/UXstudio';
+import UXstudio from './pages/UXstudio';
 
 function App() {
   return (
