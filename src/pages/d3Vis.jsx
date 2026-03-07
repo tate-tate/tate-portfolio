@@ -13,9 +13,13 @@ const D3Vis = () => {
     const [selectedState, setSelectedState] = useState("all"); // State for selected state
 
     const projection = d3.geoAlbersUsa().scale(1500).translate([600, 400]); // Map projection
+    const baseUrl = import.meta.env.BASE_URL.endsWith("/")
+        ? import.meta.env.BASE_URL
+        : `${import.meta.env.BASE_URL}/`;
+    const tornadoCsvUrl = `${baseUrl}assets/data/2024tornadoes.csv`;
 
     useEffect(() => {
-        d3.csv("/assets/data/2024tornadoes.csv").then((csvData) => {
+        d3.csv(tornadoCsvUrl).then((csvData) => {
             const processedData = csvData.map((d) => ({
                 ...d,
                 TOR_F_SCALE: d.TOR_F_SCALE ? d.TOR_F_SCALE.trim() : "EFU", // Trim and handle missing values
@@ -31,8 +35,10 @@ const D3Vis = () => {
     
             setData(processedData);
             setFilteredData(processedData); // Initially, filtered data is the same as the full data
-        });
-    }, []);
+            }).catch((error) => {
+                console.error("Error loading tornado CSV:", error);
+            });
+        }, [tornadoCsvUrl]);
 
     const handleFilterChange = (newFilteredData) => {
         setFilteredData(newFilteredData);

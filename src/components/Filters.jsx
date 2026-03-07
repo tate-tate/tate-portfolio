@@ -7,7 +7,9 @@ const Filters = ({ data, onFilterChange, onStateChange }) => {
     const [states, setStates] = useState([]);
 
     useEffect(() => {
-        const uniqueStates = Array.from(new Set(data.map((d) => d.STATE))).sort();
+        const uniqueStates = Array.from(
+            new Set(data.map((d) => (d.STATE || "").trim()).filter(Boolean))
+        ).sort();
         setStates(uniqueStates);
     }, [data]);
 
@@ -50,8 +52,8 @@ const Filters = ({ data, onFilterChange, onStateChange }) => {
                 className="filter-dropdown"
             >
                 <option value="all">All States</option>
-                {states.map((stateName) => (
-                    <option key={stateName} value={stateName}>
+                {states.map((stateName, index) => (
+                    <option key={`${stateName}-${index}`} value={stateName}>
                         {stateName}
                     </option>
                 ))}

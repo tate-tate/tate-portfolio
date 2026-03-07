@@ -16,6 +16,10 @@ export const EF_SCALE_COLORS = [ //export colors for timeline
 const TornadoMap = ({ data }) => {
     const [filteredData, setFilteredData] = useState(data);
     const [selectedState, setSelectedState] = useState("all");
+    const baseUrl = import.meta.env.BASE_URL.endsWith("/")
+        ? import.meta.env.BASE_URL
+        : `${import.meta.env.BASE_URL}/`;
+    const usStatesUrl = `${baseUrl}assets/data/us-states.json`;
 
     // refs for SVG, projection, path, and zoom
     const svgRef = useRef(null);
@@ -57,7 +61,7 @@ const TornadoMap = ({ data }) => {
         zoomRef.current = zoom;
 
         //render map
-        d3.json("/assets/data/us-states.json")
+        d3.json(usStatesUrl)
             .then((us) => {
                 mapGroup.selectAll("path")
                     .data(us.features)
@@ -73,7 +77,7 @@ const TornadoMap = ({ data }) => {
             .catch((error) => {
                 console.error("Error loading US states JSON:", error);
             });
-    }, []);
+    }, [usStatesUrl]);
 
     useEffect(() => {
         if (!mapGroupRef.current || !projectionRef.current) return;
@@ -165,7 +169,7 @@ const TornadoMap = ({ data }) => {
             return;
         }
 
-        d3.json("/assets/data/us-states.json")
+        d3.json(usStatesUrl)
             .then((us) => {
                 const stateFeature = us.features.find(
                     (feature) =>
@@ -198,7 +202,7 @@ const TornadoMap = ({ data }) => {
             .catch((error) => {
                 console.error("Error loading US states JSON:", error);
             });
-    }, [selectedState]);
+    }, [selectedState, usStatesUrl]);
 
     const handleFilterChange = ({ state, strength }) => {
         //filter

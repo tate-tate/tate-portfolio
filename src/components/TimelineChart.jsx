@@ -9,6 +9,8 @@ const TimelineChart = ({ data }) => {
     useEffect(() => {
         if (!data || data.length === 0) return;
 
+        d3.select(chartRef.current).selectAll("*").remove();
+
         const margin = { top: 20, right: 30, bottom: 50, left: 50 };
         const width = 800 - margin.left - margin.right;
         const height = 300 - margin.top - margin.bottom;
@@ -34,22 +36,38 @@ const TimelineChart = ({ data }) => {
 
         // parse and group data by month and strength
         const parseDate = d3.timeParse("%Y%m");
+        const parseYearMonth = (value) => {
+            const raw = value == null ? "" : String(value).trim();
+            return /^\d{6}$/.test(raw) ? parseDate(raw) : null;
+        };
+
+        const normalizedData = data
+            .map((d) => ({ ...d, __monthDate: parseYearMonth(d.BEGIN_YEARMONTH) }))
+            .filter((d) => d.__monthDate instanceof Date && !Number.isNaN(d.__monthDate.getTime()));
+
+        if (normalizedData.length === 0) {
+            tooltip.remove();
+            return;
+        }
+
         const groupedData = d3.rollups(
-            data,
+            normalizedData,
             (v) => v.length,
-            (d) => parseDate(d.BEGIN_YEARMONTH),
-            (d) => d.TOR_F_SCALE
+            (d) => d.__monthDate,
+            (d) => d.TOR_F_SCALE || "EFU"
         ).map(([date, strengths]) => [date, new Map(strengths || [])]);
 
-        const months = Array.from(new Set(data.map(d => parseDate(d.BEGIN_YEARMONTH)))).sort(d3.ascending);
+        const months = Array.from(new Set(normalizedData.map((d) => d.__monthDate))).sort(d3.ascending);
 
         // Scales
         const x = d3.scaleTime()
             .domain(d3.extent(months))
             .range([0, width]);
 
+        const yMax = d3.max(groupedData, ([, strengths]) => d3.sum(Array.from(strengths.values()))) || 0;
+
         const y = d3.scaleLinear()
-            .domain([0, d3.max(groupedData, ([, strengths]) => d3.sum(Array.from(strengths.values())))]).nice()
+            .domain([0, yMax]).nice()
             .range([height, 0]);
 
         const color = d3.scaleOrdinal()
@@ -83,7 +101,8 @@ const TimelineChart = ({ data }) => {
         const series = stack(groupedData);
 
         // Draw bars
-        const barWidth = x(new Date(2024, 1)) - x(new Date(2024, 0)) - 4; // alignment fix
+        const monthStep = months.length > 1 ? Math.abs(x(months[1]) - x(months[0])) : width;
+        const barWidth = Math.max(2, monthStep - 4);
         svg.append("g")
             .selectAll("g")
             .data(series)
