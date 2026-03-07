@@ -7,7 +7,7 @@ export default defineConfig({
     react(),
     dsv(),
   ],
-  base: '/', // Use '/' for custom domains
+  base: '/tate-portfolio', // Use '/' for custom domains
   server: {
     fs: {
       strict: false, // Allow access to files outside the root
