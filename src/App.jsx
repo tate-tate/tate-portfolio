@@ -15,7 +15,7 @@ function App() {
   return (
     <HashRouter>
       <header>
-        <Navbar />
+        <p>Return to <a href="https://gtsever.net">gtsever.net</a></p>
       </header>
       <main className="main-content">
         <title>Tate Sever - Data Visualization</title>
