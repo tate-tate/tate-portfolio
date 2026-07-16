@@ -7,7 +7,7 @@ export default defineConfig({
     react(),
     dsv(),
   ],
-  base: '/tate-portfolio/', // Use '/' for custom domains
+  base: '/', // Root-relative paths for custom-domain GitHub Pages deploys
   server: {
     fs: {
       strict: false, // Allow access to files outside the root
