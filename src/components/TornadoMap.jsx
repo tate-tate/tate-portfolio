@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef } from "react";
+import { useEffect, useState, useRef } from "react";
 import * as d3 from "d3";
 import Filters from "./Filters";
 
@@ -223,8 +223,8 @@ const TornadoMap = ({ data }) => {
 
     return ( //component return, renders map
         <div className="tornado-map-container">
-            <h2 style={{ textAlign: "center", marginBottom: "20px" }}>Tornado Map - Interactive</h2>
-            <p style={{ textAlign: "center", marginBottom: "20px" }}>
+            <h2 className="chart-title">Tornado Map - Interactive</h2>
+            <p className="chart-description">
                 This map is interactive. If you select an EF scale, the map will show only tornadoes with that strength. If you select a state, the map will only show tornadoes in that state, and will zoom in to show the state closer. If you hover over a dot, it will show you a tooltip with specific information about that tornado.
             </p>
             <Filters
@@ -233,34 +233,12 @@ const TornadoMap = ({ data }) => {
                 onStateChange={(state) => setSelectedState(state)}
             />
             <div id="map" className="chart"></div>
-            <div
-                id="tooltip"
-                style={{
-                    position: "absolute",
-                    opacity: 0,
-                    background: "#fff",
-                    color: "#000",
-                    padding: "5px",
-                    border: "1px solid #ccc",
-                    borderRadius: "5px",
-                    pointerEvents: "none",
-                    fontSize: "12px",
-                    fontWeight: "bold",
-                }}
-            ></div>
-            {/* Add the legend */}
-            <div id="legend" style={{ marginTop: "10px", display: "flex", gap: "10px" }}>
+            <div id="tooltip" className="map-tooltip"></div>
+            <div id="legend" className="legend-grid">
                 {EF_SCALE_COLORS.map((item) => (
-                    <div key={item.scale} style={{ display: "flex", alignItems: "center", gap: "5px" }}>
-                        <div
-                            style={{
-                                width: "20px",
-                                height: "20px",
-                                backgroundColor: item.color,
-                                border: "1px solid #ccc",
-                            }}
-                        ></div>
-                        <span style={{ fontSize: "12px", fontWeight: "bold" }}>{item.scale}</span>
+                    <div key={item.scale} className="legend-item">
+                        <div className="legend-swatch" style={{ backgroundColor: item.color }}></div>
+                        <span>{item.scale}</span>
                     </div>
                 ))}
             </div>

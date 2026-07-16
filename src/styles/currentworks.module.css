@@ -1,62 +1,21 @@
-.homeContainer {
-    display: flex;
-    align-items: center;
-    justify-content: flex-start;
-    text-align: left;
-    padding: 2rem;
-    max-width: 900px;
-    margin: 0 auto;
-    gap: 2rem;
-    flex-wrap: nowrap; 
-  }
-  
-  .homepagepicture {
-    width: 250px;
-    height: auto;
-    border-radius: 10px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
-    flex-shrink: 0;
-    margin : 10px;
-    align-items: center;
-  }
+.currentworksimage {
+  width: 100%;
+  max-width: 1080px;
+  border-radius: 22px;
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow-soft);
+}
 
-  
-  .text {
-    flex: 1;
-    color: #f5f5f5 !important;
-    min-width: 300px;
-  }
-  
-  h1 {
-    font-size: 2.5rem;
-    font-weight: bold;
-    color: #fff;
-    margin-bottom: 1rem;
-  }
-  
-  p {
-    font-size: 1.1rem;
-    line-height: 1.6;
-    margin-bottom: 1rem;
-  }
-  
-  @media (max-width: 768px) {
-    .homeContainer {
-      flex-direction: column;
-      text-align: center;
-    }
-  
-  }
-  .caption{
-    text-align: center;
-  }
-  .vsphoto{
-    width: 100%;
-    height: auto;
-    border-radius: 10px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
-    flex-shrink: 0;
-    margin : 10px;
-    align-items: center;
-  }
+.caption {
+  text-align: center;
+  color: var(--text-muted);
+}
+
+.vsphoto {
+  width: 100%;
+  height: auto;
+  border-radius: 22px;
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow-soft);
+}
   

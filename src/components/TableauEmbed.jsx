@@ -4,17 +4,11 @@ const TableauEmbed = () => {
   useEffect(() => {
     const divElement = document.getElementById("viz1740180505452");
     const vizElement = divElement.getElementsByTagName("object")[0];
-    
-    if (divElement.offsetWidth > 800) {
-      vizElement.style.width = "1169px";
-      vizElement.style.height = "2575px";
-    } else if (divElement.offsetWidth > 500) {
-      vizElement.style.width = "1169px";
-      vizElement.style.height = "2575px";
-    } else {
-      vizElement.style.width = "100%";
-      vizElement.style.height = "2677px";
-    }
+
+    const containerWidth = divElement?.clientWidth || 800;
+    vizElement.style.width = "100%";
+    vizElement.style.maxWidth = "100%";
+    vizElement.style.height = `${Math.round(containerWidth * 2.15)}px`;
     
     const scriptElement = document.createElement("script");
     scriptElement.src = "https://public.tableau.com/javascripts/api/viz_v1.js";
@@ -22,7 +16,7 @@ const TableauEmbed = () => {
   }, []);
 
   return (
-    <div id="viz1740180505452" style={{ position: "relative" }}>
+    <div className="tableau-embed" id="viz1740180505452" style={{ position: "relative", width: "100%", maxWidth: "100%", overflow: "hidden" }}>
       <noscript>
         <a href="#">
           <img

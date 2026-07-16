@@ -11,13 +11,12 @@ body.dark-mode {
     --tick-hover-color: #aaa;
 }
 
-.app {
-  display: flex;
-  flex-direction: column;
+.main-content {
+  width: 100%;
   min-height: 100vh;
+  padding: calc(var(--nav-height) + 1.25rem) var(--page-gutter) 3rem;
 }
 
-.main-content {
-  flex: 1;
-  padding-top: 80px;
+.main-content > * {
+  width: 100%;
 }
