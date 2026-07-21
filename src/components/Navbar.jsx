@@ -41,6 +41,7 @@ const Navbar = () => {
         <li><Link to="/tableau">Tableau</Link></li>
         {/* <li><Link to="/photography">Gallery</Link></li> */}
         <li><a href="https://www.linkedin.com/in/gabriel-sever-dvis/">LinkedIN</a></li>
+        <li><a href="https://github.com/tate-tate">GitHub</a></li>
         <li><a href="mailto:gabrieltsever@gmail.com">Contact</a></li>
       </ul>
       <button className="theme-toggle" onClick={toggleTheme} type="button">
